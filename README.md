@@ -1,62 +1,74 @@
-# Express.js RESTful API Assignment
+Product API – Week 2 Assignment
+A simple Node.js + Express REST API for managing products. This project implements CRUD operations, middleware validation, authentication, and query filtering, as required in the assignment.
+Features
+• In-memory product database (no external DB required)
+• CRUD Operations: Create, Read, Update, Delete products
+• Middleware Implementations: Authentication (auth.js), Request validation (validateProduct.js)
+• Query and filter support: search, category filter, pagination
+• Product statistics endpoint (/api/products/stats)
+• Environment variables for configuration
+Folder Structure
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+project/
+│
+├── server.js                  # Main entry point
+│
+├── routes/
+│   └── productRoutes.js       # Handles all product routes
+│
+├── middleware/
+│   ├── auth.js                # API key authentication middleware
+│   └── validateProduct.js     # Validates product POST/PUT body
+│
+├── .env                       # Environment variables (not committed)
+├── .env.example               # Example of environment variables
+├── package.json
+└── README.md
 
-## Assignment Overview
+Installation & Setup
+• Clone the repository: git clone <your_repo_url> && cd express-js-server-side-framework-Nattydread777
+• Install dependencies: npm install
+• Create .env file based on .env.example (PORT=3000, API_KEY=test-key)
+• Start the server: npm start (Server runs on http://localhost:5000)
+Authentication
+Protected routes (POST, PUT, DELETE) require a valid API key in the request header.
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+Header:
+  x-api-key: test-key
 
-## Getting Started
+Example:
+curl -X POST http://localhost:3000/api/products \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: test-key' \
+  -d '{"name":"Monitor","description":"24 inch","price":200,"category":"electronics"}'
+API Documentation
+Base URL: http://localhost:3000/api/products
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
-
-## Files Included
-
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
-
-## Requirements
-
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
-
-## API Endpoints
-
-The API will have the following endpoints:
-
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
-
-## Submission
-
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
-
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
-
-## Resources
-
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+GET / – Fetch all products with optional filters (category, q, page, limit)
+GET /search?q=term – Search products by name
+GET /stats – View total and count by category
+GET /:id – Retrieve a specific product by ID
+POST / – Add a new product (Protected with x-api-key)
+PUT /:id – Update product details (Protected)
+DELETE /:id – Remove a product (Protected)
+Middleware Summary
+auth.js – Protects routes using API key verification
+validateProduct.js – Validates and sanitizes incoming product data
+Example Environment File (.env.example)
+PORT=3000
+API_KEY=test-key
+Tools & Dependencies
+• express – Web server
+• uuid – Generates unique product IDs
+• dotenv – Loads environment variables
+• body-parser – Parses JSON requests
+Notes
+No database required; data is stored in memory.
+Static routes (/search, /stats) must appear before parameter routes (/:id).
+Update the .env file to change PORT or API_KEY.
+Use Postman or cURL for testing endpoints.
+Author
+Nathaniel Usikpedo
+Week 2 Node.js API Assignment Submission
+Course: Backend Development – PLP / MongoDB Week 2
+Date: October 2025
